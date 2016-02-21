@@ -1,6 +1,5 @@
 package graphique;
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,93 +9,108 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import util3.ComplexeInt;
- 
+
 public class Fenetre extends JFrame {
+
+    public static final int dimentionX = 500;
+    public static final int dimentionY = 500;
+    //-------------------------------------------------------------
     private Panneau pan = new Panneau();
-    private JButton[] bouton;
 
     private JPanel container = new JPanel();
 
-    private int compteur = 0;
+
     private boolean animated = true;
-    private boolean backX, backY;
+
 
     private Thread t;
+    // private Thread t2;
 
+    private objet obj;
+    //private objet obj1;
 
     public Fenetre() {
-        this.setTitle("Animation");
-        this.setSize(300, 300);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
 
-        container.setBackground(Color.gray);
+        //----------------------------Creation de la fenetre global ---------------------------------------------------------
+        this.setTitle("Animation");
+        this.setSize(dimentionX, dimentionY);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+//-----------------------Definir pan comme fond et l'afficher--------------------------------------
+        this.setContentPane(pan);
+        this.setVisible(true);
+
+        //---------------------------------------------------------------------------------------------
+
+
+       go();
+/*
+        container.setBackground(Color.blue);
+        container.setVisible(true);
         container.setLayout(new BorderLayout());
         container.add(pan, BorderLayout.CENTER);
 
+        t = new Thread(new PlayAnimation());System.out.println("threas");
 
-        JPanel top = new JPanel();
-        animated = true;
-        t = new Thread(new PlayAnimation());
         t.start();
 
-        container.add(top, BorderLayout.NORTH);
         this.setContentPane(container);
+        obj.setVisible(true);
         this.setVisible(true);
+*/
+
+
     }
 
-    private void go(ComplexeInt size) {
-        int x = pan.getPosX();
-        int y = pan.getPosY();
-        while (this.animated) {
-            if (x < 1) backX = false;
-            if (x > pan.getWidth() - size.getRe()) backX = true;
-            if (y < 1) backY = false;
-            if (y > pan.getHeight() - size.getIm()) backY = true;
-            if (!backX) pan.setPosX(++x);
-            else pan.setPosX(--x);
-            if (!backY) pan.setPosY(++y);
-            else pan.setPosY(--y);
-
+    private void go(){
+        for(int i = -50; i < pan.getWidth(); i++){
+            int x = pan.getPosX(), y = pan.getPosY();
+            x++;
+            y++;
+            pan.setPosX(x);
+            pan.setPosY(y);
             pan.repaint();
             try {
-                Thread.sleep(3);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }
 
-    class PlayAnimation implements Runnable {
-        public void run() {
-            ComplexeInt size = new ComplexeInt(50, 50);
-            go(size);
-        }
     }
-}
-//*************************************************************************************************************************************
 
 /*
+    class PlayAnimation implements Runnable {
 
-//Classe écoutant notre bouton
-  public class BoutonListener implements ActionListener{
-     public void actionPerformed(ActionEvent arg0) {
-      animated = true;
-      t = new Thread(new PlayAnimation());
-      t.start();
-      bouton[0].setEnabled(false);
-      bouton[1].setEnabled(true);
+        public  void run() {System.out.println("running");
+
+
+            ComplexeInt size = new ComplexeInt(50, 50);
+
+            boolean backX=false, backY=false;
+            int x = obj.getPosX();
+            int y = obj.getPosY();
+
+            while (obj.getAnimeted()) {
+                if (x < 1) backX = false;
+                if (x > pan.getWidth() - size.getRe()) backX = true;
+                if (y < 1) backY = false;
+                if (y > pan.getHeight() - size.getIm()) backY = true;
+                if (!backX) obj.setPosX(++x);
+                else obj.setPosX(--x);
+                if (!backY) obj.setPosY(++y);
+                else obj.setPosY(--y);
+
+                pan.repaint();
+                try {
+                    Thread.sleep(3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
-  }
+     */
 
-  class Bouton2Listener implements ActionListener{
-    public void actionPerformed(ActionEvent e) {
-      animated = false;
-      bouton[0].setEnabled(true);
-      bouton[1].setEnabled(false);
-    }
-  }
-
-
-  }
- */
+}
