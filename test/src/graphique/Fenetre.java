@@ -41,49 +41,58 @@ public class Fenetre extends JFrame {
         this.setContentPane(pan);
         this.setVisible(true);
 
-        //---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
 
 
        go();
-/*
-        container.setBackground(Color.blue);
-        container.setVisible(true);
-        container.setLayout(new BorderLayout());
-        container.add(pan, BorderLayout.CENTER);
 
-        t = new Thread(new PlayAnimation());System.out.println("threas");
+/*
+        t = new Thread(new PlayAnimation());
 
         t.start();
 
         this.setContentPane(container);
-        obj.setVisible(true);
-        this.setVisible(true);
+
+
+
 */
 
-
+     //   this.setVisible(true);
     }
 
     private void go(){
-        for(int i = -50; i < pan.getWidth(); i++){
-            int x = pan.getPosX(), y = pan.getPosY();
-            x++;
-            y++;
-            pan.setPosX(x);
-            pan.setPosY(y);
-            pan.repaint();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
-    }
+
+        while (true)
+            {System.out.println("utilitaire"+pan.getObj(0).getPosX()+" "+pan.getObj(0).getPosY());
+
+             for(int i=0;i<5;i++)
+             {   if ( pan.getObj(i).getPosX() < 1)                  pan.getObj(i).setBackX(false);
+                 if (pan.getObj(i).getPosX() > pan.getWidth() - 50) pan.getObj(i).setBackX(true);
+
+                 if (pan.getObj(i).getPosY() < 1)                    pan.getObj(i).setBackY(false);
+                 if (pan.getObj(i).getPosY() > pan.getHeight() - 50) pan.getObj(i).setBackY(true);
+
+                 if (!pan.getObj(i).getBackX()) pan.getObj(i).setPosX(pan.getObj(i).getPosX()+pan.getObj(i).getVitesse());
+                 else pan.getObj(i).setPosX(pan.getObj(i).getPosX()-pan.getObj(i).getVitesse());
+
+                 if (!pan.getObj(i).getBackY())  pan.getObj(i).setPosY(pan.getObj(i).getPosY()+pan.getObj(i).getVitesse());
+                 else pan.getObj(i).setPosY(pan.getObj(i).getPosY()-pan.getObj(i).getVitesse());
+
+             }
+
+                pan.repaint();
+                try {Thread.sleep(10);}
+                catch (InterruptedException e) {e.printStackTrace();}
+            }
+
+
+        }
 
 /*
     class PlayAnimation implements Runnable {
 
-        public  void run() {System.out.println("running");
+        public  void run() {
 
 
             ComplexeInt size = new ComplexeInt(50, 50);
@@ -92,7 +101,9 @@ public class Fenetre extends JFrame {
             int x = obj.getPosX();
             int y = obj.getPosY();
 
-            while (obj.getAnimeted()) {
+           // while (obj.getAnimeted())
+            while (true)
+            {System.out.println("running");
                 if (x < 1) backX = false;
                 if (x > pan.getWidth() - size.getRe()) backX = true;
                 if (y < 1) backY = false;
@@ -103,14 +114,12 @@ public class Fenetre extends JFrame {
                 else obj.setPosY(--y);
 
                 pan.repaint();
-                try {
-                    Thread.sleep(3);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+                try {Thread.sleep(3);}
+                catch (InterruptedException e) {e.printStackTrace();}
             }
         }
     }
-     */
 
+*/
 }
