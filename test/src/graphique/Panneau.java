@@ -1,6 +1,8 @@
 package graphique;
 
+import util3.Complexe;
 import util3.ComplexeInt;
+import util3.Complexebool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,14 +23,34 @@ public class Panneau extends JPanel {
         obj[4]= new objet(Color.gray,new ComplexeInt(300,55),4,4);
     }
 
+    public void collision_classic(int i)
+    {   if (getObj(i).getPosX() < 1)
+             {getObj(i).setBackX(false);}
+        if (getObj(i).getPosX() > getWidth() - getObj(i).getDim().getRe())
+            { getObj(i).setBackX(true);}
 
-    public void setPos(ComplexeInt pos) {this.pos = pos;  }
-
-    public void setDimention(ComplexeInt dimention) {   this.dimention = dimention;
+        if (getObj(i).getPosY() < 1)
+            {getObj(i).setBackY(false);}
+        if (getObj(i).getPosY() > getHeight() - getObj(i).getDim().getIm())
+             {getObj(i).setBackY(true);}
     }
 
-    public void setObj(objet objet,int i) {this.obj[i] = objet;    }
-    public objet getObj(int i) {return obj[i]; }
+    public void inversion_colision(Complexebool inversion,int i)
+    {
+    if(inversion.getRe())
+        {if(getObj(i).getBackX())
+            {getObj(i).setBackX(false);}
+         else
+            {getObj(i).setBackX(true);}
+         }
+    if(inversion.getIm())
+        {if(getObj(i).getBackY())
+            {getObj(i).setBackY(false);}
+        else
+            {getObj(i).setBackY(true);}
+        }
+    }
+
 
 
     public void paintComponent(Graphics g){g.setColor(Color.lightGray);
@@ -59,16 +81,9 @@ public class Panneau extends JPanel {
         }
     }
 
-    public void drawLine(Graphics g,ComplexeInt origine,ComplexeInt destination)
-    {g.drawLine(origine.getRe(),origine.getIm(),destination.getRe(),destination.getIm());}
 
 
-    public static void Ovale(Graphics g,Color color,ComplexeInt pos,ComplexeInt Dimension)
-    {
-        g.setColor(color);
-      g.fillOval(pos.getRe(), pos.getIm(), Dimension.getRe(), Dimension.getIm());
-    }
-
+// ---------------------   creation figure  -------------------------------------------------------
     public static void Ovale(Graphics g,objet obj)
     { g.setColor(obj.getColor());
         g.fillOval(obj.getPos().getRe(), obj.getPos().getIm(),obj.getDim().getRe(), obj.getDim().getIm());
@@ -115,10 +130,19 @@ public class Panneau extends JPanel {
         g.drawLine(s5X, s5Y, s1X, s1Y);
     }
 
+// ---------------------   Getter setter  -------------------------------------------------------
     public int getPosX() {return pos.getRe();}
     public void setPosX(int posX) {this.pos.setRe(posX);}
 
     public int getPosY() {return pos.getIm();}
     public void setPosY(int posY) {this.pos.setIm(posY);}
+
+    public void setPos(ComplexeInt pos) {this.pos = pos;  }
+
+    public void setDimention(ComplexeInt dimention) {   this.dimention = dimention; }
+
+    public void setObj(objet objet,int i) {this.obj[i] = objet;    }
+    public objet getObj(int i) {return obj[i]; }
+
 
 }

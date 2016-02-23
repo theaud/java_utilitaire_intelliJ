@@ -67,11 +67,9 @@ public class Fenetre extends JFrame {
             {System.out.println("utilitaire"+pan.getObj(0).getPosX()+" "+pan.getObj(0).getPosY());
 
              for(int i=0;i<5;i++)
-             {   if ( pan.getObj(i).getPosX() < 1)                  pan.getObj(i).setBackX(false);
-                 if (pan.getObj(i).getPosX() > pan.getWidth() - 50) pan.getObj(i).setBackX(true);
+             {
 
-                 if (pan.getObj(i).getPosY() < 1)                    pan.getObj(i).setBackY(false);
-                 if (pan.getObj(i).getPosY() > pan.getHeight() - 50) pan.getObj(i).setBackY(true);
+                 pan.collision_classic(i);
 
                  if (!pan.getObj(i).getBackX()) pan.getObj(i).setPosX(pan.getObj(i).getPosX()+pan.getObj(i).getVitesse());
                  else pan.getObj(i).setPosX(pan.getObj(i).getPosX()-pan.getObj(i).getVitesse());
@@ -88,6 +86,8 @@ public class Fenetre extends JFrame {
 
 
         }
+
+
 
 /*
     class PlayAnimation implements Runnable {
