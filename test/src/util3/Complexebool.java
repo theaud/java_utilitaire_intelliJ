@@ -17,7 +17,7 @@ public class Complexebool {
     {_im=true;
      _re=true;
     }
-    public  Complexebool(boolean im,boolean re)
+    public  Complexebool(boolean re,boolean im)
     {_im=im;
         _re=re;
     }

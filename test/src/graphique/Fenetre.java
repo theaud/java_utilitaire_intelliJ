@@ -43,7 +43,6 @@ public class Fenetre extends JFrame {
 
 //---------------------------------------------------------------------------------------------
 
-
        go();
 
 /*
@@ -53,34 +52,32 @@ public class Fenetre extends JFrame {
 
         this.setContentPane(container);
 
-
-
 */
-
      //   this.setVisible(true);
     }
 
     private void go(){
-
+    int vitesse=1;
 
         while (true)
-            {System.out.println("utilitaire"+pan.getObj(0).getPosX()+" "+pan.getObj(0).getPosY());
+            {
 
              for(int i=0;i<5;i++)
              {
+                 vitesse=pan.getObj(i).getVitesse();
 
+                 pan.collision_objet();
                  pan.collision_classic(i);
+                 if (!pan.getObj(i).getBackX()) pan.getObj(i).moveX(vitesse);
+                 else pan.getObj(i).moveX(-vitesse);
 
-                 if (!pan.getObj(i).getBackX()) pan.getObj(i).setPosX(pan.getObj(i).getPosX()+pan.getObj(i).getVitesse());
-                 else pan.getObj(i).setPosX(pan.getObj(i).getPosX()-pan.getObj(i).getVitesse());
-
-                 if (!pan.getObj(i).getBackY())  pan.getObj(i).setPosY(pan.getObj(i).getPosY()+pan.getObj(i).getVitesse());
-                 else pan.getObj(i).setPosY(pan.getObj(i).getPosY()-pan.getObj(i).getVitesse());
+                 if (!pan.getObj(i).getBackY())  pan.getObj(i).moveY(vitesse);
+                 else pan.getObj(i).moveY(-vitesse);
 
              }
 
                 pan.repaint();
-                try {Thread.sleep(10);}
+                try {Thread.sleep(5);}
                 catch (InterruptedException e) {e.printStackTrace();}
             }
 
