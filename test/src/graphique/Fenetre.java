@@ -43,6 +43,7 @@ public class Fenetre extends JFrame {
 
 //---------------------------------------------------------------------------------------------
 
+
        go();
 
 /*
@@ -52,39 +53,41 @@ public class Fenetre extends JFrame {
 
         this.setContentPane(container);
 
+
+
 */
+
      //   this.setVisible(true);
     }
 
     private void go(){
-    int vitesse=1;
+
 
         while (true)
-            {
+            {System.out.println("utilitaire"+pan.getObj(0).getPosX()+" "+pan.getObj(0).getPosY());
 
              for(int i=0;i<5;i++)
-             {
-                 vitesse=pan.getObj(i).getVitesse();
+             {   if ( pan.getObj(i).getPosX() < 1)                  pan.getObj(i).setBackX(false);
+                 if (pan.getObj(i).getPosX() > pan.getWidth() - 50) pan.getObj(i).setBackX(true);
 
-                 pan.collision_objet();
-                 pan.collision_classic(i);
-                 if (!pan.getObj(i).getBackX()) pan.getObj(i).moveX(vitesse);
-                 else pan.getObj(i).moveX(-vitesse);
+                 if (pan.getObj(i).getPosY() < 1)                    pan.getObj(i).setBackY(false);
+                 if (pan.getObj(i).getPosY() > pan.getHeight() - 50) pan.getObj(i).setBackY(true);
 
-                 if (!pan.getObj(i).getBackY())  pan.getObj(i).moveY(vitesse);
-                 else pan.getObj(i).moveY(-vitesse);
+                 if (!pan.getObj(i).getBackX()) pan.getObj(i).setPosX(pan.getObj(i).getPosX()+pan.getObj(i).getVitesse());
+                 else pan.getObj(i).setPosX(pan.getObj(i).getPosX()-pan.getObj(i).getVitesse());
+
+                 if (!pan.getObj(i).getBackY())  pan.getObj(i).setPosY(pan.getObj(i).getPosY()+pan.getObj(i).getVitesse());
+                 else pan.getObj(i).setPosY(pan.getObj(i).getPosY()-pan.getObj(i).getVitesse());
 
              }
 
                 pan.repaint();
-                try {Thread.sleep(5);}
+                try {Thread.sleep(10);}
                 catch (InterruptedException e) {e.printStackTrace();}
             }
 
 
         }
-
-
 
 /*
     class PlayAnimation implements Runnable {
